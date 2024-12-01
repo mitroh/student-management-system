@@ -2,10 +2,12 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
 import os
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://rohanmittalsnp:18RE7aTAh7pS7JOc@cluster0.epomb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-client = AsyncIOMotorClient(MONGO_URI)
-db = client.student_management
+from pymongo import MongoClient
 
+
+mongo_uri = os.getenv("MONGO_URI")
+client = MongoClient(mongo_uri)
+db = client.get_database()
 def to_response_id(obj):
   
     if "_id" in obj:
