@@ -12,16 +12,6 @@ async def create_student(student: StudentCreate):
     result = await db.students.insert_one(student_dict)
     return {"id": str(result.inserted_id)}
 
-# @router.get("/", response_model=List[StudentResponse])
-# async def list_students(country: Optional[str] = None, age: Optional[int] = None):
-#     filters = {}
-#     if country:
-#         filters["address.country"] = country
-#     if age is not None:
-#         filters["age"] = {"$gte": age}
-#     students = await db.students.find(filters).to_list(100)
-#     return [to_response_id(student) for student in students]
-
 @router.get("/", response_model=dict)
 async def list_students(country: Optional[str] = None, age: Optional[int] = None):
     filters = {}
@@ -35,30 +25,6 @@ async def list_students(country: Optional[str] = None, age: Optional[int] = None
     response_data = [{"name": student["name"], "age": student["age"]} for student in students]
 
     return {"data": response_data}
-
-# @router.get("/{id}", response_model=StudentResponse)
-# async def fetch_student(id: str):
-#     if not ObjectId.is_valid(id):
-#         raise HTTPException(status_code=400, detail="Invalid ID")
-#     student = await db.students.find_one({"_id": ObjectId(id)})
-#     if not student:
-#         raise HTTPException(status_code=404, detail="Student not found")
-#     return to_response_id(student)
-# @router.get("/{id}", response_model=StudentResponse)
-# async def fetch_student(id: str):
-
-#     if not ObjectId.is_valid(id):
-#         raise HTTPException(status_code=400, detail="Invalid ID")
-    
-
-#     student = await db.students.find_one({"_id": ObjectId(id)}, {"_id": 0})  
-    
-
-#     if not student:
-#         raise HTTPException(status_code=404, detail="Student not found")
-    
-
-#     return student
 
 @router.get("/{id}", response_model=StudentResponse)
 async def fetch_student(id: str):

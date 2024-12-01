@@ -16,7 +16,6 @@ class StudentUpdate(BaseModel):
     address: Optional[Address]
 
 class StudentResponse(BaseModel):
-    # id: str
     name: str
     age: int
     address: Address
